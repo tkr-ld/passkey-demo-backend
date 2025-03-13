@@ -1,0 +1,24 @@
+services:
+  dynamodb:
+    image: amazon/dynamodb-local
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./dynamodb:/data
+    command: "-jar DynamoDBLocal.jar -sharedDb -dbPath /data"
+  aws-cli:
+    image: amazon/aws-cli:latest
+    volumes:
+      - ./init-dynamodb-local.sh:/init-dynamodb-local.sh
+    depends_on:
+      - dynamodb
+    entrypoint: sh /init-dynamodb-local.sh
+
+  dynamodb-admin:
+    image: aaronshaf/dynamodb-admin
+    ports:
+      - "8001:8001"
+    environment:
+      - DYNAMO_ENDPOINT=http://dynamodb:8000
+    depends_on:
+      - dynamodb
