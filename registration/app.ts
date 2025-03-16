@@ -25,7 +25,6 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent): Promise<APIGat
             response: credentials,
             expectedChallenge: challenge,
             expectedOrigin: 'http://localhost:5173',
-            // PRID(ドメイン)
             expectedRPID: 'localhost',
             // requireUserVerification: ユーザー検証が必要かどうかを指定する
             // falseの場合、認証器はユーザーの存在を確認するだけで、特定のユーザーが認証器を操作していることを検証しない
